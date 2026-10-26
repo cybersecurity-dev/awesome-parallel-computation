@@ -155,6 +155,65 @@ mindmap
     <img src="https://github.com/cybersecurity-dev/cybersecurity-dev/blob/main/assets/bar.gif">
 </p>
 
+```mermaid
+flowchart TD
+    START(["Python program is too slow or unresponsive"])
+
+    START --> PROFILE["Measure and profile"]
+    PROFILE --> TYPE{"Workload type?"}
+
+    TYPE -->|"Mostly waiting"| IO["I/O-bound"]
+    TYPE -->|"Mostly calculating"| CPU["CPU-bound"]
+    TYPE -->|"Waiting and calculating"| MIXED["Mixed pipeline"]
+
+    IO --> AMOUNT{"Concurrency size?"}
+    AMOUNT -->|"Moderate"| THREAD["Threads"]
+    AMOUNT -->|"Large"| ASYNC["asyncio"]
+    AMOUNT -->|"Simple worker pool"| TPOOL["ThreadPoolExecutor"]
+
+    CPU --> CPUCHOICE{"Execution strategy?"}
+    CPUCHOICE -->|"Multiple CPU cores"| PROCESS["Multiprocessing"]
+    CPUCHOICE -->|"Simple worker pool"| PPOOL["ProcessPoolExecutor"]
+    CPUCHOICE -->|"Array computation"| NUMPY["NumPy or native library"]
+    CPUCHOICE -->|"Massive data parallelism"| GPU["GPU"]
+
+    MIXED --> PIPE["asyncio plus process pool"]
+
+    THREAD --> CHECK
+    ASYNC --> CHECK
+    TPOOL --> CHECK
+    PROCESS --> CHECK
+    PPOOL --> CHECK
+    NUMPY --> CHECK
+    GPU --> CHECK
+    PIPE --> CHECK
+
+    CHECK{"Shared mutable data?"}
+
+    CHECK -->|"Yes"| SYNC["Lock, Queue, Pipe,<br/>shared memory or isolation"]
+    CHECK -->|"No"| BENCH["Benchmark"]
+
+    SYNC --> BENCH
+    BENCH --> RESULT{"Faster and correct?"}
+
+    RESULT -->|"No"| PROFILE
+    RESULT -->|"Yes"| END(["Use selected model"])
+
+    classDef terminal fill:#306998,color:#fff,stroke:#1f4768,stroke-width:3px
+    classDef decision fill:#ffd43b,color:#111,stroke:#b7950b,stroke-width:2px
+    classDef io fill:#e3f2fd,color:#111,stroke:#1e88e5
+    classDef cpu fill:#e8f5e9,color:#111,stroke:#43a047
+    classDef mixed fill:#f3e5f5,color:#111,stroke:#8e24aa
+    classDef safety fill:#ffebee,color:#111,stroke:#e53935
+
+    class START,END terminal
+    class TYPE,AMOUNT,CPUCHOICE,CHECK,RESULT decision
+    class IO,THREAD,ASYNC,TPOOL io
+    class CPU,PROCESS,PPOOL,NUMPY,GPU cpu
+    class MIXED,PIPE mixed
+    class SYNC,BENCH,PROFILE safety
+```
+
 ## 📖 Contents
 - [My Awesome Lists](#my-awesome-lists)
 - [Contributing](#contributing)
