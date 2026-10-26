@@ -157,27 +157,27 @@ mindmap
 
 ```mermaid
 flowchart TD
-    START(["Python program is too slow or unresponsive"])
+    START(["Python program is<br/>too slow or<br/>unresponsive"])
 
-    START --> PROFILE["Measure and profile"]
+    START --> PROFILE["Measure<br/>and<br/>profile"]
     PROFILE --> TYPE{"Workload type?"}
 
     TYPE -->|"Mostly waiting"| IO["I/O-bound"]
     TYPE -->|"Mostly calculating"| CPU["CPU-bound"]
     TYPE -->|"Waiting and calculating"| MIXED["Mixed pipeline"]
 
-    IO --> AMOUNT{"Concurrency size?"}
+    IO --> AMOUNT{"Concurrency<br/>size?"}
     AMOUNT -->|"Moderate"| THREAD["Threads"]
     AMOUNT -->|"Large"| ASYNC["asyncio"]
     AMOUNT -->|"Simple worker pool"| TPOOL["ThreadPoolExecutor"]
 
-    CPU --> CPUCHOICE{"Execution strategy?"}
+    CPU --> CPUCHOICE{"Execution<br/>strategy?"}
     CPUCHOICE -->|"Multiple CPU cores"| PROCESS["Multiprocessing"]
     CPUCHOICE -->|"Simple worker pool"| PPOOL["ProcessPoolExecutor"]
     CPUCHOICE -->|"Array computation"| NUMPY["NumPy or native library"]
     CPUCHOICE -->|"Massive data parallelism"| GPU["GPU"]
 
-    MIXED --> PIPE["asyncio plus process pool"]
+    MIXED --> PIPE["asyncio plus<br/>process pool"]
 
     THREAD --> CHECK
     ASYNC --> CHECK
@@ -190,14 +190,14 @@ flowchart TD
 
     CHECK{"Shared mutable data?"}
 
-    CHECK -->|"Yes"| SYNC["Lock, Queue, Pipe,<br/>shared memory or isolation"]
+    CHECK -->|"Yes"| SYNC["Lock, Queue,<br/>Pipe,<br/>shared memory or<br/>isolation"]
     CHECK -->|"No"| BENCH["Benchmark"]
 
     SYNC --> BENCH
     BENCH --> RESULT{"Faster and correct?"}
 
     RESULT -->|"No"| PROFILE
-    RESULT -->|"Yes"| END(["Use selected model"])
+    RESULT -->|"Yes"| END(["Use selected<br/>model"])
 
     classDef terminal fill:#306998,color:#fff,stroke:#1f4768,stroke-width:3px
     classDef decision fill:#ffd43b,color:#111,stroke:#b7950b,stroke-width:2px
